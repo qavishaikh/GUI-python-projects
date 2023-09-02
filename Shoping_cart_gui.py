@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import font as tkFont
 
 # Initialize the shopping cart as a set
 shopping_cart = set()
@@ -27,14 +28,18 @@ root.title("Shopping Cart")
 entry = tk.Text(root, width=70, height=3)
 entry.pack()
 
+# Define a font with increased size and style
+font = tkFont.Font(family="Arial", size=16, weight="bold")
+fontList = tkFont.Font(family="Calibri", size=17) 
+
 # Buttons for adding and removing items
-add_button = tk.Button(root, width=40, text="Add Item", command=add_item,)
-remove_button = tk.Button(root, width=40, text="Remove Item", command=remove_item)
+add_button = tk.Button(root, width=40, text="Add Item", command=add_item,bg="yellow", fg="black", font=font)
+remove_button = tk.Button(root, width=40, text="Remove Item", command=remove_item,bg="yellow", fg="black", font=font)
 add_button.pack()
 remove_button.pack()
 
 # Listbox to display the shopping cart
-cart_listbox = tk.Listbox(root, width=60, selectmode=tk.SINGLE)
+cart_listbox = tk.Listbox(root, width=60, font=fontList, selectmode=tk.SINGLE)
 cart_listbox.pack()
 
 # Run the GUI main loop
