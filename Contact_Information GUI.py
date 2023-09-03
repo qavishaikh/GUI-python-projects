@@ -1,3 +1,5 @@
+#This is the Contact Information App
+#Created By Qavi Shaikh
 import tkinter as tk
 from tkinter import messagebox
 
@@ -6,7 +8,9 @@ def add_contact():
     name = name_entry.get()
     phone = phone_entry.get()
     
-    if len(phone) != 11:
+    if not name:
+        messagebox.showerror("Invalid Input", "Name field cannot be empty.")
+    elif len(phone) != 11:
         messagebox.showerror("Invalid Input", "Phone number must be exactly 11 digits.")
     else:
         contacts[name] = phone
@@ -19,7 +23,9 @@ def update_contact():
     name = name_entry.get()
     phone = phone_entry.get()
     
-    if name in contacts:
+    if not name:
+        messagebox.showerror("Invalid Input", "Name field cannot be empty.")
+    elif name in contacts:
         if len(phone) != 11:
             messagebox.showerror("Invalid Input", "Phone number must be exactly 11 digits.")
         else:
@@ -46,9 +52,22 @@ def search_contact():
     name = name_entry.get()
     if name in contacts:
         phone = contacts[name]
-        phone_label.config(text=f"{name}'s phone number is {phone}")
+        messagebox.showinfo("Contact Found", f"{name}'s phone number is {phone}")
     else:
-        phone_label.config(text=f"{name} is not in your contacts.")
+        messagebox.showinfo("Contact Not Found", f"{name} is not in your contacts.")
+
+# Function to display all contacts
+def display_all_contacts():
+    if not contacts:
+        messagebox.showinfo("Contacts", "Your contacts list is empty.")
+    else:
+        contact_list = "\n".join([f"{name}: {phone}" for name, phone in contacts.items()])
+        messagebox.showinfo("Contacts", contact_list)
+
+# Function to exit the application
+def exit_application():
+    messagebox.showinfo("Thanks", "Thank You :)\nCreated By Qavi Shaikh!")
+    root.quit()
 
 # Create the main window
 root = tk.Tk()
@@ -61,31 +80,34 @@ contacts = {}
 name_label = tk.Label(root, text="Name:")
 name_label.pack()
 
-name_entry = tk.Entry(root, width=40)  # Increase width
+name_entry = tk.Entry(root, width=40, font=("Helvetica", 12))  # Increase font size
 name_entry.pack()
-
-phone_label = tk.Label(root, text="")
-phone_label.pack()
 
 phone_label = tk.Label(root, text="Phone:")
 phone_label.pack()
 
-phone_entry = tk.Entry(root, width=40)  # Increase width
+phone_entry = tk.Entry(root, width=40, font=("Helvetica", 12))  # Increase font size
 phone_entry.pack()
 
-add_button = tk.Button(root, text="Add Contact", command=add_contact, width=20, height=2)  # Increase width and height
-add_button.pack()
+add_button = tk.Button(root, text="Add Contact", command=add_contact)
+add_button.pack(fill=tk.BOTH, expand=True)
 
-update_button = tk.Button(root, text="Update Contact", command=update_contact, width=20, height=2)  # Increase width and height
-update_button.pack()
+update_button = tk.Button(root, text="Update Contact", command=update_contact)
+update_button.pack(fill=tk.BOTH, expand=True)
 
-delete_button = tk.Button(root, text="Delete Contact", command=delete_contact, width=20, height=2)  # Increase width and height
-delete_button.pack()
+delete_button = tk.Button(root, text="Delete Contact", command=delete_contact)
+delete_button.pack(fill=tk.BOTH, expand=True)
 
-search_button = tk.Button(root, text="Search Contact", command=search_contact, width=20, height=2)  # Increase width and height
-search_button.pack()
+search_button = tk.Button(root, text="Search Contact", command=search_contact)
+search_button.pack(fill=tk.BOTH, expand=True)
 
-exit_button = tk.Button(root, text="Exit", command=root.destroy, width=20, height=2)  # Increase width and height
-exit_button.pack()
+display_button = tk.Button(root, text="Display All Contacts", command=display_all_contacts)
+display_button.pack(fill=tk.BOTH, expand=True)
+
+exit_button = tk.Button(root, text="Exit", command=exit_application)
+exit_button.pack(fill=tk.BOTH, expand=True)
+
+# Set the height of the main window
+root.geometry("400x500")
 
 root.mainloop()
